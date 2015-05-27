@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleQRCodeSystem.Model;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace SimpleQRCodeSystem
         public MainWindow()
         {
             InitializeComponent();
+            var db = new SQLiteConnection("databse.db");
+            db.CreateTable<Badge>();
         }
 
         private void SearchQRCode_CanExecute(object sender, CanExecuteRoutedEventArgs e)
