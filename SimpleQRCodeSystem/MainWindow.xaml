@@ -6,7 +6,7 @@
         <CommandBinding Command="ApplicationCommands.New" Executed="SearchQRCode_Executed" CanExecute="SearchQRCode_CanExecute" />
     </Window.CommandBindings>
     
-    <Grid Margin="10,10">
+    <Grid x:Name="grid" Margin="10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -20,5 +20,6 @@
                 <KeyBinding Key="Enter" Command="ApplicationCommands.New"></KeyBinding>
             </TextBox.InputBindings>
         </TextBox>
+        <Label x:Name="returnLabel"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  />
     </Grid>
 </Window>

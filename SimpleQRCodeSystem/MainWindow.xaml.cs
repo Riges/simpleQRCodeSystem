@@ -81,11 +81,13 @@ namespace SimpleQRCodeSystem
 
                 if (badge.Id == 0)
                 {
-                    qrCodeSearch.Text = "Not FOUND !";
+                    returnLabel.Content = "Billet NON Valide";
+                    this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Red");
                 } else {
                     if (badge.Used)
                     {
-                        qrCodeSearch.Text = "Found but already Used !";
+                        returnLabel.Content = "Billet Valide, mais déjà utilisé";
+                        this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Red");
                     }
                     else
                     {
@@ -96,7 +98,8 @@ namespace SimpleQRCodeSystem
                         command.Parameters.AddWithValue("@code", searchCode);
                         command.ExecuteNonQuery();
 
-                        qrCodeSearch.Text = "OK !";
+                        returnLabel.Content = "Billet Valide";
+                        this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Green");
                     }
                 }
             }
@@ -117,8 +120,12 @@ namespace SimpleQRCodeSystem
                         command.ExecuteNonQuery();
                     }
                 }
-                qrCodeSearch.Text = "";
+                returnLabel.Content = "Donnés importés";
+
+                this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("LightSkyBlue");
             }
+
+            qrCodeSearch.Text = "";
         }
     }
 }
