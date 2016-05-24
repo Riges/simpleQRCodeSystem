@@ -1,21 +1,11 @@
 ﻿using SimpleQRCodeSystem.Model;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SimpleQRCodeSystem
 {
@@ -65,7 +55,7 @@ namespace SimpleQRCodeSystem
                     while (!reader.IsClosed && reader.Read())
                     {
                         badge.Id = Int32.Parse(reader["id"].ToString());
-                        badge.code = reader["code"].ToString();
+                        badge.Code = reader["code"].ToString();
                         if (reader["usedAt"].ToString() != "")
                         {
                             badge.Used = true;
