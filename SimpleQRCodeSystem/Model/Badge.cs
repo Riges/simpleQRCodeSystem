@@ -9,8 +9,8 @@
 
         public Badge()
         {
-            this.Used = false;
-            this.Code = "";
+            Used = false;
+            Code = "";
         }
     }
 }
