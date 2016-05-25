@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Unity;
+using SimpleQRCodeSystem.Repositories;
 
 namespace SimpleQRCodeSystem
 {
@@ -10,11 +11,30 @@ namespace SimpleQRCodeSystem
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IUnityContainer container = new UnityContainer();
-            //container.RegisterType<ICustomerService, CustomerService>();
+            using (var unity = CreateContainerAndRegisterServices())
+            {
+                var mainWindow = unity.Resolve<MainWindow>();
+                mainWindow.Show();
+            }
+        }
 
-            MainWindow mainWindow = container.Resolve<MainWindow>();
-            mainWindow.Show();
+        private IUnityContainer CreateContainerAndRegisterServices()
+        {
+            UnityContainer container = null;
+
+            try
+            {
+                container = new UnityContainer();
+                // Register Repositories
+                container.RegisterInstance<IBadgeRepository>(new BadgeRepository());
+            }
+            catch
+            {
+                container?.Dispose();
+                throw;
+            }
+
+            return container;
         }
     }
 }

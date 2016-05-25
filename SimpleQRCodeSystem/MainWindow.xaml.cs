@@ -1,11 +1,11 @@
-﻿using SimpleQRCodeSystem.Model;
-using System;
+﻿using System;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using SimpleQRCodeSystem.Models;
 
 namespace SimpleQRCodeSystem
 {

@@ -1,6 +1,8 @@
-﻿namespace SimpleQRCodeSystem.Model
+﻿using SimpleQRCodeSystem.IModels;
+
+namespace SimpleQRCodeSystem.Models
 {
-    public class Badge
+    public class Badge : IBadge
     {
         public int Id { get; set; }
 

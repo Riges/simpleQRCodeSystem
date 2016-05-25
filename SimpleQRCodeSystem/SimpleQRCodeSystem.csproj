@@ -104,7 +104,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Badge.cs" />
+    <Compile Include="IModels\IBadge.cs" />
+    <Compile Include="Models\Badge.cs" />
+    <Compile Include="Repositories\BadgeRepository.cs" />
+    <Compile Include="Repositories\IBadgeRepository.cs" />
+    <Compile Include="Services\IBadgeService.cs" />
+    <Compile Include="Services\BadgeService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,6 +154,7 @@
   <ItemGroup>
     <Content Include="sqlite3.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
