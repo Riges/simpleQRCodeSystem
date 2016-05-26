@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleQRCodeSystem.IModels;
 
 namespace SimpleQRCodeSystem.Services
 {
     public interface IBadgeService
     {
-
+        IBadge Find(string code);
+        void SetUsedAt(string code);
+        void Insert(string code);
     }
 }

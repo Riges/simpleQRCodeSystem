@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Unity;
 using SimpleQRCodeSystem.Repositories;
+using SimpleQRCodeSystem.Services;
 
 namespace SimpleQRCodeSystem
 {
@@ -27,6 +28,9 @@ namespace SimpleQRCodeSystem
                 container = new UnityContainer();
                 // Register Repositories
                 container.RegisterInstance<IBadgeRepository>(new BadgeRepository());
+
+                //Register services.
+                container.RegisterType<IBadgeService, BadgeService>();
             }
             catch
             {
