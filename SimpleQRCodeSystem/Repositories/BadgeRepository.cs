@@ -33,7 +33,11 @@ namespace SimpleQRCodeSystem.Repositories
         {
             foreach (var code in codes)
             {
-                _badges.Add(new Badge { Code = code });
+                var result = _badges.FirstOrDefault(x => x.Code == code);
+                if (result == null)
+                {
+                    _badges.Add(new Badge { Code = code });
+                }
             }
             Save();
         }
