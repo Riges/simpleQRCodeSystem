@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
+using System.IO;
 using SimpleQRCodeSystem.IModels;
 using SimpleQRCodeSystem.Models;
 
-namespace SimpleQRCodeSystem.Repositories
+namespace SimpleQRCodeSystem.Repositories.Sqlite
 {
     public class BadgeRepository : IBadgeRepository
     {
