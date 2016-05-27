@@ -1,5 +1,4 @@
-﻿using System.Data.SQLite;
-using SimpleQRCodeSystem.IModels;
+﻿using SimpleQRCodeSystem.IModels;
 
 namespace SimpleQRCodeSystem.Repositories
 {

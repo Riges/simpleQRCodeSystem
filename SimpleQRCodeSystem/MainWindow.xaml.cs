@@ -1,11 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using SimpleQRCodeSystem.Models;
-using SimpleQRCodeSystem.Repositories;
 using SimpleQRCodeSystem.Services;
 
 namespace SimpleQRCodeSystem

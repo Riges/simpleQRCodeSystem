@@ -107,7 +107,7 @@
     <Compile Include="IModels\IBadge.cs" />
     <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\BadgeResult.cs" />
-    <Compile Include="Repositories\BadgeRepository.cs" />
+    <Compile Include="Repositories\Sqlite\BadgeRepository.cs" />
     <Compile Include="Repositories\IBadgeRepository.cs" />
     <Compile Include="Services\IBadgeService.cs" />
     <Compile Include="Services\BadgeService.cs" />
