@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using NodaTime;
 using SimpleQRCodeSystem.Models;
 using SimpleQRCodeSystem.Repositories;
 
@@ -15,10 +17,10 @@ namespace SimpleQRCodeSystem.Services
 
         public BadgeResult Find(string code)
         {
-            var badge = _badgeRepository.Find(code);
             var badgeResult = new BadgeResult();
+            var badge = _badgeRepository.Find(code);
 
-            if (badge.Id == 0)
+            if (string.IsNullOrEmpty(badge.Code))
             {
                 badgeResult.Label = "Billet NON Valide";
                 badgeResult.Color = "Red";
@@ -26,9 +28,9 @@ namespace SimpleQRCodeSystem.Services
             else
             {
                 badgeResult.Badge = badge;
-                if (badge.Used)
+                if (badge.UsedAt.HasValue)
                 {
-                    badgeResult.Label = "Billet Valide, mais déjà utilisé";
+                    badgeResult.Label = "Billet Valide, mais déjà utilisé à " + badge.UsedAt.Value.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
                     badgeResult.Color = "Red";
                 }
                 else
@@ -45,15 +47,18 @@ namespace SimpleQRCodeSystem.Services
         public BadgeResult Import(string path)
         {
             var reader = new StreamReader(File.OpenRead(@path));
+            var codes = new List<string>();
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
                 var values = line?.Split('|');
                 if (values?.Length == 21)
                 {
-                    _badgeRepository.Insert(values[1]);
+                    codes.Add(values[1]);
                 }
             }
+
+            _badgeRepository.Insert(codes);
 
             var badgeResult = new BadgeResult
             {

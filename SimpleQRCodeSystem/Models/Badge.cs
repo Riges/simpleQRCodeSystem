@@ -1,18 +1,10 @@
-﻿using SimpleQRCodeSystem.IModels;
+﻿using NodaTime;
 
 namespace SimpleQRCodeSystem.Models
 {
-    public class Badge : IBadge
+    public class Badge
     {
-        public int Id { get; set; }
-
         public string Code { get; set; }
-        public bool Used { get; set; }
-
-        public Badge()
-        {
-            Used = false;
-            Code = "";
-        }
+        public Instant? UsedAt { get; set; }
     }
 }
