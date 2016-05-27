@@ -1,58 +1,67 @@
-﻿using System.Data.SQLite;
-using SimpleQRCodeSystem.IModels;
+﻿using System.IO;
 using SimpleQRCodeSystem.Models;
 using SimpleQRCodeSystem.Repositories;
 
 namespace SimpleQRCodeSystem.Services
 {
-    class BadgeService : IBadgeService
+    internal class BadgeService : IBadgeService
     {
         private readonly IBadgeRepository _badgeRepository;
 
         public BadgeService(IBadgeRepository badgeRepository)
         {
-            this._badgeRepository = badgeRepository;
+            _badgeRepository = badgeRepository;
         }
 
-        public IBadge Find(string code)
+        public BadgeResult Find(string code)
         {
-            var badge = new Badge();
-            var sql = "SELECT * FROM badge WHERE code = @code LIMIT 1";
-            var cmd = new SQLiteCommand(sql, _badgeRepository.SqLiteConnection);
-            cmd.Parameters.AddWithValue("@code", code);
+            var badge = _badgeRepository.Find(code);
+            var badgeResult = new BadgeResult();
 
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            if (badge.Id == 0)
             {
-                while (!reader.IsClosed && reader.Read())
+                badgeResult.Label = "Billet NON Valide";
+                badgeResult.Color = "Red";
+            }
+            else
+            {
+                badgeResult.Badge = badge;
+                if (badge.Used)
                 {
-                    badge.Id = int.Parse(reader["id"].ToString());
-                    badge.Code = reader["code"].ToString();
-                    badge.Used = reader["usedAt"].ToString() != "";
-                    cmd.Cancel();
-                    reader.Close();
+                    badgeResult.Label = "Billet Valide, mais déjà utilisé";
+                    badgeResult.Color = "Red";
+                }
+                else
+                {
+                    _badgeRepository.SetUsedAt(code);
+                    badgeResult.Label = "Billet Valide";
+                    badgeResult.Color = "Green";
                 }
             }
-            return badge;
+
+            return badgeResult;
         }
 
-        public void SetUsedAt(string code)
+        public BadgeResult Import(string path)
         {
-            SQLiteCommand command = new SQLiteCommand(
-                "UPDATE badge set usedAt = datetime() WHERE code = @code;",
-                _badgeRepository.SqLiteConnection
-            );
-            command.Parameters.AddWithValue("@code", code);
-            command.ExecuteNonQuery();
-        }
+            var reader = new StreamReader(File.OpenRead(@path));
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line?.Split('|');
+                if (values?.Length == 21)
+                {
+                    _badgeRepository.Insert(values[1]);
+                }
+            }
 
-        public void Insert(string code)
-        {
-            SQLiteCommand command = new SQLiteCommand(
-                "INSERT OR IGNORE INTO badge (id, code, usedAt) VALUES (null, @code, null);",
-                _badgeRepository.SqLiteConnection
-            );
-            command.Parameters.AddWithValue("@code", code);
-            command.ExecuteNonQuery();
+            var badgeResult = new BadgeResult
+            {
+                Label = "Donnés importés",
+                Color = "LightSkyBlue"
+            };
+
+            return badgeResult;
         }
     }
 }

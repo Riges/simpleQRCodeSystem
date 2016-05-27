@@ -1,11 +1,10 @@
-﻿using SimpleQRCodeSystem.IModels;
+﻿using SimpleQRCodeSystem.Models;
 
 namespace SimpleQRCodeSystem.Services
 {
     public interface IBadgeService
     {
-        IBadge Find(string code);
-        void SetUsedAt(string code);
-        void Insert(string code);
+        BadgeResult Find(string code);
+        BadgeResult Import(string path);
     }
 }

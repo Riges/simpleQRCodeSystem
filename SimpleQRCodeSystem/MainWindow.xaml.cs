@@ -32,45 +32,18 @@ namespace SimpleQRCodeSystem
         {
             Regex regex = new Regex(@"^\d+$");
             var searchCode = qrCodeSearch.Text.Trim().ToLower();
+            BadgeResult badgeResult = new BadgeResult();
             if (regex.IsMatch(searchCode))
             {
-                var badge = _badgeService.Find(searchCode);
-
-                if (badge.Id == 0)
-                {
-                    returnLabel.Content = "Billet NON Valide";
-                    this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Red");
-                } else {
-                    if (badge.Used)
-                    {
-                        returnLabel.Content = "Billet Valide, mais déjà utilisé";
-                        this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Red");
-                    }
-                    else
-                    {
-                        _badgeService.SetUsedAt(searchCode);
-
-                        returnLabel.Content = "Billet Valide";
-                        this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("Green");
-                    }
-                }
+                badgeResult = _badgeService.Find(searchCode);
             }
             else if (File.Exists(qrCodeSearch.Text))
             {
-                var reader = new StreamReader(File.OpenRead(@qrCodeSearch.Text));
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split('|');
-                    if (values.Length == 21)
-                    {
-                        _badgeService.Insert(values[1]);
-                    }
-                }
-                returnLabel.Content = "Donnés importés";
-
-                this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("LightSkyBlue");
+                badgeResult = _badgeService.Import(qrCodeSearch.Text);
             }
+
+            returnLabel.Content = badgeResult.Label;
+            this.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(badgeResult.Color);
 
             qrCodeSearch.Text = "";
         }

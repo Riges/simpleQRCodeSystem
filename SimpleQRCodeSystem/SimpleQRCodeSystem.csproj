@@ -106,6 +106,7 @@
     </ApplicationDefinition>
     <Compile Include="IModels\IBadge.cs" />
     <Compile Include="Models\Badge.cs" />
+    <Compile Include="Models\BadgeResult.cs" />
     <Compile Include="Repositories\BadgeRepository.cs" />
     <Compile Include="Repositories\IBadgeRepository.cs" />
     <Compile Include="Services\IBadgeService.cs" />

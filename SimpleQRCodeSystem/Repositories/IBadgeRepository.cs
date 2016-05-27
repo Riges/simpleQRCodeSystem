@@ -1,9 +1,12 @@
 ﻿using System.Data.SQLite;
+using SimpleQRCodeSystem.IModels;
 
 namespace SimpleQRCodeSystem.Repositories
 {
     public interface IBadgeRepository
     {
-        SQLiteConnection SqLiteConnection { get; }
+        IBadge Find(string code);
+        void SetUsedAt(string code);
+        void Insert(string code);
     }
 }
