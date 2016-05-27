@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Unity;
 using SimpleQRCodeSystem.Repositories;
-using SimpleQRCodeSystem.Repositories.Sqlite;
+using SimpleQRCodeSystem.Repositories.Json;
 using SimpleQRCodeSystem.Services;
 
 namespace SimpleQRCodeSystem
