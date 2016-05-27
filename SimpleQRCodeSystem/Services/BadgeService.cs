@@ -17,8 +17,8 @@ namespace SimpleQRCodeSystem.Services
 
         public BadgeResult Find(string code)
         {
-            var badge = _badgeRepository.Find(code);
             var badgeResult = new BadgeResult();
+            var badge = _badgeRepository.Find(code);
 
             if (string.IsNullOrEmpty(badge.Code))
             {
@@ -28,9 +28,9 @@ namespace SimpleQRCodeSystem.Services
             else
             {
                 badgeResult.Badge = badge;
-                if (badge.Used)
+                if (badge.UsedAt.HasValue)
                 {
-                    badgeResult.Label = "Billet Valide, mais déjà utilisé à " + badge.UsedAt.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+                    badgeResult.Label = "Billet Valide, mais déjà utilisé à " + badge.UsedAt.Value.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
                     badgeResult.Color = "Red";
                 }
                 else

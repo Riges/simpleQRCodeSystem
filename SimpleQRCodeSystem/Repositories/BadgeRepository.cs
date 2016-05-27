@@ -47,7 +47,6 @@ namespace SimpleQRCodeSystem.Repositories
             var badge = _badges.FirstOrDefault(x => x.Code == code);
             if (badge != null)
             {
-                badge.Used = true;
                 badge.UsedAt = SystemClock.Instance.Now;
             }
             Save();
